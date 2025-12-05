@@ -1,3 +1,9 @@
+xserver-xlibre-video-vesa (1:2.6.0.4-1) unstable; urgency=medium
+
+  * New upstream version 2.6.0.4
+
+ -- NexusSfan <nexussfan@duck.com>  Thu, 04 Dec 2025 17:25:09 -0800
+
 xserver-xlibre-video-vesa (1:2.6.0.3-1) unstable; urgency=medium
 
   * New upstream version 2.6.0.3
