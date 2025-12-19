@@ -65,6 +65,15 @@
 #endif
 #include "compat-api.h"
 
+// Source: xserver/hw/xfree86/os-support/misc/SlowBcopy.c
+/* The outb() isn't needed on my machine, but who knows ... -- ost */
+void
+xf86SlowBcopy(unsigned char *src, unsigned char *dst, int len)
+{
+    while (len--)
+        *dst++ = *src++;
+}
+
 /* Mandatory functions */
 static const OptionInfoRec * VESAAvailableOptions(int chipid, int busid);
 static void VESAIdentify(int flags);
