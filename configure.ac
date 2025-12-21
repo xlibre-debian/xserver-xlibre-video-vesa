@@ -22,16 +22,18 @@
 
 # Initialize Autoconf
 AC_PREREQ([2.60])
-AC_INIT([xf86-video-vesa],
-        [2.6.0],
-        [https://gitlab.freedesktop.org/xorg/driver/xf86-video-vesa/-/issues],
-        [xf86-video-vesa])
+AC_INIT([xlibre-xf86-video-vesa],
+        [25.0.0],
+        [https://github.com/X11Libre/xf86-video-vesa/issues],
+        [xlibre-xf86-video-vesa])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_AUX_DIR(.)
 
 # Initialize Automake
 AM_INIT_AUTOMAKE([foreign dist-xz])
+
+CFLAGS="$CFLAGS -std=c99"
 
 # Require X.Org macros 1.8 or later for MAN_SUBSTS set by XORG_MANPAGE_SECTIONS
 m4_ifndef([XORG_MACROS_VERSION],
@@ -60,35 +62,8 @@ XORG_DRIVER_CHECK_EXT(DPMSExtension, xextproto)
 
 # Obtain compiler/linker options for the driver dependencies
 PKG_CHECK_MODULES(XORG, xorg-server >= 1.18 xproto fontsproto $REQUIRED_MODULES)
-PKG_CHECK_MODULES(XEXT, [xextproto >= 7.0.99.1],
-                  HAVE_XEXTPROTO_71="yes", HAVE_XEXTPROTO_71="no")
+PKG_CHECK_MODULES(XEXT, [xextproto >= 7.0.99.1])
+PKG_CHECK_MODULES([PCIACCESS], [pciaccess >= 0.12.901])
 
-if test "x$HAVE_XEXTPROTO_71" = xyes; then
-    AC_DEFINE(HAVE_XEXTPROTO_71, 1, [xextproto 7.1 available])
-fi
-
-save_CFLAGS="$CFLAGS"
-CFLAGS="$XORG_CFLAGS"
-AC_CHECK_DECL(XSERVER_LIBPCIACCESS,
-              [XSERVER_LIBPCIACCESS=yes], [XSERVER_LIBPCIACCESS=no],
-              [#include "xorg-server.h"])
-CFLAGS="$save_CFLAGS"
-
-if test "x$XSERVER_LIBPCIACCESS" = xyes; then
-    PKG_CHECK_MODULES([PCIACCESS], [pciaccess >= 0.12.901])
-fi
-
-# Checks for library functions
-# We don't use strlcat, strlcpy, or timingsafe_memcmp, but check to quiet
-# -Wredundant-decls warning from xorg/os.h which will otherwise redefine them.
-AC_CHECK_FUNCS([strlcat strlcpy timingsafe_memcmp])
-
-DRIVER_NAME=vesa
-AC_SUBST([DRIVER_NAME])
-
-AC_CONFIG_FILES([
-                Makefile
-                src/Makefile
-                man/Makefile
-])
+AC_CONFIG_FILES([Makefile src/Makefile man/Makefile])
 AC_OUTPUT
