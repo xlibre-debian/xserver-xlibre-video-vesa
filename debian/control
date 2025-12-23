@@ -11,8 +11,8 @@ Build-Depends:
  quilt,
  libpciaccess-dev (>= 0.12.901),
 Standards-Version: 4.6.2
-Vcs-Git: https://github.com/xlibre-deb/xserver-xlibre-video-vesa.git
-Vcs-Browser: https://github.com/xlibre-deb/xserver-xlibre-video-vesa
+Vcs-Git: https://github.com/xlibre-debian/xserver-xlibre-video-vesa.git
+Vcs-Browser: https://github.com/xlibre-debian/xserver-xlibre-video-vesa
 Homepage: https://github.com/X11Libre
 
 Package: xserver-xlibre-video-vesa
